@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"net.lyflow.testjavadoc"},{"l":"net.lyflow.testjavadoc.entity"}];updateSearchResults();
