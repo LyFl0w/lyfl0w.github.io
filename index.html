@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Hub</title>
+</head>
+<body>
+    <h1>Documentation Hub</h1>
+    <ul id="projectList"></ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const projectList = document.getElementById("projectList");
+
+            // Fonction pour récupérer la liste des sous-dossiers
+            function getSubdirectories(callback) {
+                fetch('https://api.github.com/repos/LyFl0w/lyfl0w.github.io/contents/', {
+                    headers: {
+                        Accept: "application/vnd.github.v3+json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const subdirectories = data.filter(item => item.type === 'dir').map(item => item.name);
+                    callback(subdirectories);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            // Générer les liens vers les documentations des projets
+            function generateProjectLinks(subdirectories) {
+                subdirectories.forEach(directory => {
+                    const listItem = document.createElement("li");
+                    const link = document.createElement("a");
+                    link.href = `./${directory}/index.html`; // Assurez-vous d'ajuster le chemin si nécessaire
+                    link.textContent = directory;
+                    listItem.appendChild(link);
+                    projectList.appendChild(listItem);
+                });
+            }
+
+            // Appel de la fonction pour récupérer les sous-dossiers
+            getSubdirectories(generateProjectLinks);
+        });
+    </script>
+</body>
+</html>
